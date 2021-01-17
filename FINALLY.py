@@ -7,13 +7,6 @@ from datetime import datetime,timezone
 from datetime import timedelta
 from datetime import datetime, timedelta
 
-#get top games10 using helix
-#add tags to selenium pyautoguiscript
-#use chrome extensions to find the best tags to use 
-#make the program have a nested loop so it uploads the top clips video for each game
-#client_id = 'hqc99l0g1pv0qhy797w90t5jv04nrd'
-#oldauthorizationtoken = 'Bearer gwct88d9osd6cx4fwultixvcamt3wk'
-#import twitch
 client_id = 'ghl21u9bh2sahlgxgwfuv2o86zbujz'
 client_secret='i7u0ksokaz5zag8cor31qxg1kgo8ft'
 bearer_token = requests.post(f"https://id.twitch.tv/oauth2/token"
@@ -21,17 +14,7 @@ bearer_token = requests.post(f"https://id.twitch.tv/oauth2/token"
                                          f"&client_secret={client_secret}"
                                          "&grant_type=client_credentials").json()['access_token']
 print(bearer_token)
-# create instance of twitch API
-
-# add User authentication
-#twitch.set_user_authentication(token, target_scope, refresh_token)
-
-#client = twitch.TwitchHelix(client_id=client_id, client_secret='gu4v9ao5tn8lpj877zrnbmllcxtm0z', scopes=[twitch.constants.OAUTH_SCOPE_ANALYTICS_READ_EXTENSIONS])
-#tokencode= client.get_oauth(clip)
-#print(tokencode)
 authorizationtoken = 'Bearer '+bearer_token
-#tokenmaybe=requests.get("https://id.twitch.tv/oauth2/authorize?client_id=client_id&redirect_uri=https://twitchapps.com/tokengen/&response_type=token&scope=")
-#print(tokenmaybe)
 if not os.path.exists('downloads'):
     os.mkdir('downloads')
 top_game = requests.get("https://api.twitch.tv/helix/games/top",headers={"Client-ID": client_id,'Authorization': authorizationtoken},params={'first':5}).json()
@@ -60,7 +43,7 @@ for item in top_game['data']:
 
         print(clip_info)
         thumb_url = clip_info['data'][0]['thumbnail_url']
-        # print(thumb_url)
+        
         mp4_url = thumb_url.split("-preview", 1)[0] + ".mp4"
 
         output_path = (basepath + out_filename)
